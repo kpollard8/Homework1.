@@ -1,0 +1,49 @@
+##Question 1
+# load necessary packages 
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stringr, readxl, data.table, gdata)
+
+#reading full ma data
+data <- readRDS("data/output/full_ma_data.rds")
+summary(data)
+
+#question 1
+num_observations <- nrow(data)
+print(num_observations)
+
+#Question 2
+num_plan_types <- length(unique(data$plan_type))
+cat("Number of different plan types", num_plan_types, "\n")
+
+#question 3
+plan_count_table <- data %>%
+  group_by(year, plan_type) %>%
+  summarise(plan_count = n()) %>%
+  pivot_wider(names_from = year, values_from = plan_count, values_fill = 0)
+
+# Print the table
+print(plan_count_table, n=27)
+
+#question 4
+final.plans <- data %>%
+  filter(snp == "No" & eghp == "No" &
+            (planid < 800 | planid >= 900))
+plan.type.year2 <- final.plans %>% group_by(plan_type, year) %>% count () %>% arrange(year, -n)
+plan.type.year2 <- pivot_wider(plan.type.year2, names_from="year", values_from="n", names_prefix="Count_")
+
+print(final.plans)
+
+#question 4 try again 
+
+# Make a subset of 2010-2015
+plan_count <- subset(data, year >= 2010 & year <= 2015) %>%
+    filter (snp == "No" & eghp == "No" &
+        (planid < 800 | planid >= 900))
+
+plan.type.year2 <- plan_count %>% group_by(plan_type, year) %>% count() %>% arrange(year, -n)
+plan.type.year2 <- pivot_wider (plan.type.year2, names_from = "year", values_from ="n", names_prefix="Count ")
+
+print(plan_count)
+
+rm(list=c("full.ma.data", "plant_count", "final.plans", "data", "plan_count_table","full_ma_data")) 
+save.image("submission2/Hw1_workspace.Rdata")
