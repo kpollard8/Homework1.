@@ -29,6 +29,7 @@ pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes, 
 load("Hw1_workspace.Rdata")
 ```
 
+Here is the link to my GitHub Repository: https://github.com/kpollard8/Homework1. 
 
 Here are my answers for Homework 1. I do the coding in a separate `R` script, but here is the cleaned-up version. I run the analysis separately, save the workspace with only the summary stats, figures, and tables that I need, and then load the workspace in the final qmd. My analysis file with answers and code to all the questions is available in the analysis folder. 
 
