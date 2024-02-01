@@ -26,11 +26,11 @@ pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes, 
 ```{r}
 #| include: false
 #| eval: true
-load("submission3/Hw1_workspace.Rdata")
+load("Hw1_workspace.Rdata")
 ```
 
 
-My answers to the homework questions are described below. Note that I do the analysis for these answers in a separate `R` script. You can read in the full data as part of your markdown file, but that takes some time to compile to pdf. So I run the analysis separately, save the workspace with only the summary stats, figures, and tables that I need, and then load the workspace in the final qmd. My analysis file is available in the analysis folder. Enjoy!
+Here are my answers for Homework 1. I do the coding in a separate `R` script, but here is the cleaned-up version. I run the analysis separately, save the workspace with only the summary stats, figures, and tables that I need, and then load the workspace in the final qmd. My analysis file with answers and code to all the questions is available in the analysis folder. 
 
 \newpage
 # Enrollment Data
@@ -39,12 +39,12 @@ Answer the following based on the enrollment data:
 \vspace{.2in}
 \noindent 1. How many observations exist in your current dataset?<br>
 
-First we need to create the enrollment data. Working with the Medicare Advantage Github Repository, you should have created a "full.ma.data" object. Then we just count the total number of plans. This yields `r format(tot.obs, big.mark=",")` total observations in the full dataset, which means there are `r format(tot.obs, big.mark=",")` unique combinations of contract/plan/county/year. 
+The answer to quesiton 1 is `r format(tot.obs, big.mark=",")` total observations in the full dataset, which means there are `r format(tot.obs, big.mark=",")` unique combinations of contract/plan/county/year. 
 
 \newpage
 \noindent 2. How many different *plan_types* exist in the data? <br>
 
-To do this, we need to group by plan type and count the number of unique plan types. I did this by creating a table of unique plan types (since we'll need this for the next question anyway). The resulting table yields `r nrow(plan.type.table)` rows, so there are `r nrow(plan.type.table)` total plan types. 
+The resulting table for question 2 is `r nrow(plan.type.table)` rows, so there are `r nrow(plan.type.table)` total plan types. 
 
 
 \newpage
@@ -92,7 +92,7 @@ knitr::kable(plan.type.year2,
 \newpage
 \noindent 5. Merge the the contract service area data to the enrollment data and restrict the data only to contracts that are approved in their respective counties. Limit your dataset only to plans with non-missing enrollment data. Provide a graph showing the average number of Medicare Advantage enrollees per county from 2008 to 2015.<br>
 
-Now we can join that dataset to our MA data. I use an inner join, which means I'm only taking rows that match in both datasets. I then apply the filter to remove plans with missing enrollment data, from which we can form the graph of average enrollments per county, as reflected in @fig-enroll.
+Now we can join that dataset to our MA data. I use an inner join, which means I'm only taking rows that match each other in both datasets. I then apply the filter to remove plans with missing enrollment data, from which we can form the graph of average enrollments per county, as reflected in @fig-enroll.
 
 ```{r}
 #| echo: false
@@ -108,9 +108,7 @@ fig.avg.enrollment
 
 \noindent 6. Merge the plan characteristics data to the dataset you created in Step 5 above. Provide a graph showing the average premium over time. Don't forget about formatting!<br>
 
-As mentioned in the instructions, we first need to merge in the market penetration data to provide a crosswalk between the plan/contract info and the plan characteristics. Next we need to fill in the state information. I do this by creating a table of unique state names and then merging this back to the original data. Finally, we can read in the premium data and merge that information to the final dataset
-
-A graph of average premiums over time is presented in @fig-premium. Note the spike in premiums in 2014. What's that?
+A graph of average premiums over time is in @fig-premium.
 
 ```{r}
 #| echo: false
@@ -144,13 +142,13 @@ fig.percent.zero
 \vspace{.2in}
 \noindent 8. Why did we drop the "800-series" plans?<br>
 
-These are plans that aren't available to all people. There are sometimes referred to as "Employer Group Waiver Plans". Since not everyone has access to these plans, summaries including these plans aren't reflective of an average enrollee's experience in the Medicare Advantage program.
+These plans, referred to as "Employer Group Waiver Plans", are not available to all people. Since not everyone has access to these plans, summaries including these plans aren't reflective of an average enrollee's experience in the Medicare Advantage program.
 
 
 \newpage
 \noindent 9. Why do so many plans charge a $0 premium? What does that really mean to a beneficiary?<br>
 
-All beneficiaries still pay a Part B premium (nearly $180 in 2022). So a plan with no premium really just means it's a plan with no additional premium in excess of the Part B premium. 
+The $0 premium charge is a little misleading because all it means is there is no addiitional premium, but they still have to pay Medicare Part B premiums. 
 
 
 \newpage
