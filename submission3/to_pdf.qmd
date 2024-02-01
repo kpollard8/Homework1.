@@ -27,6 +27,16 @@ pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes, 
 #| include: false
 #| eval: true
  
+
+
+file_path <- "submission3/Hw1_workspace.Rdata"
+
+if (file.exists(file_path)) {
+  # Proceed with loading the filegetwd()
+  load(file_path)
+} else {
+  cat("File not found:", file_path, "\n")
+}
 load("submission3/Hw1_workspace.Rdata")
 ```
 
